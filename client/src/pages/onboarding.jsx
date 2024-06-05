@@ -1,7 +1,8 @@
+import { useStateProvider } from "@/context/StateContext";
 import Image from "next/image";
-import React from "react";
 
-function onboarding() {
+  function onboarding() {
+  const[{userInfo}]=useStateProvider();
   return (<div className="bg-panel-header-background h-screen w-screen text-white flex flex-col items-center justify-center">
     <div className="flex items-center justify-centre gap-2">
       <Image src="/INDIA.gif" alt="INDI-CHAT" height={600} width={600}/>
@@ -13,11 +14,11 @@ function onboarding() {
      <span className="text-lg pt-12 px-2 bg-clip-text text-transparent bg-[linear-gradient(to_right,#FFA500,#FFA500,#FFFFFF,#FFFFFF,#FFFFFF,#00FF00,#00FF00)]">Judiye Apno Se...</span>
      </div>
 
-     <h2 className="text-2xl">Create Your Profile</h2>
-
+     <h2 className="text-2xl">Create account</h2>
+      
      <div className="flex gap-6 mt-6">
         <div className="flex flex-col items-centerjustify-center mt-5 gap-6">
-
+         {userInfo.name} 
         </div>
      </div>
 
