@@ -6,8 +6,8 @@ export const initialState={
 };
 
 const reducer=(state,action)=>{
-    console.log('yaha hu');
-    console.log({userInfo:action.userInfo});
+    // console.log('yaha hu');
+    // console.log({userInfo:action.userInfo});
     switch(action.type){
         case reducerCases.SET_USER_INFO:
          return {
