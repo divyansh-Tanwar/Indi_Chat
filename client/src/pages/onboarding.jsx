@@ -1,3 +1,4 @@
+import Avatar from "@/components/common/Avatar";
 import Input from "@/components/common/Input";
 import { useStateProvider } from "@/context/StateContext";
 import Image from "next/image";
@@ -24,13 +25,20 @@ import { useState } from "react";
       <span className="absolute inset-0 bg-gradient-to-r from-yellow-500 via-transparent to-green-500 opacity-40"></span>
         Create account
        </h2>
-      
+      {/* ------------------------------------input image------------------------------------------------ */}
+
+       <Avatar type="xl" image={image} setImage={setImage}/>
+
+       {/* ----------------------------------input name and about--------------------------------------- */}
      <div className="flex gap-6 mt-6">
-        <div className="flex flex-col items-centerjustify-center mt-5 gap-6">
+        <div className="flex flex-col items-centerjustify-center mt-2 gap-6">
          <Input name="Display Name"  state={name} setState={setName} label/>
          <Input name="About"  state={about} setState={setAbout} label/>
          {/* <Input name=""  state={about} setState={setAbout} label/> */}
         </div>
+     </div>
+     <div>
+     
      </div>
 
   </div>);
