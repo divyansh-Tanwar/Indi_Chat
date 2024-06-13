@@ -4,11 +4,13 @@ import { useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import ContextMenu from "./ContextMenu";
 import PhotoPicker from "./PhotoPicker";
+import PhotoLibrary from "./PhotoLibrary";
 function Avatar({type,image,setImage}) {
   const[hover,sethover]=useState(false);
   const[isContextMenuVisible,setisContextMenuVisible]=useState(false);
   const[contextMenuCoordinates,setcontextMenuCoordinates]=useState({x:0,y:0});
   const [grabPhoto,setgrabPhoto]=useState(false);
+  const [showphotoLibrary,setshowphotoLibrary] =useState(false);
 
   useEffect(()=>{
    
@@ -28,7 +30,9 @@ function Avatar({type,image,setImage}) {
 
   const contextMenuOptions=[
     { name:"Take Photo",callback:()=>{}},
-    { name:"Choose from Library",callback:()=>{}},
+    { name:"Choose from Library",callback:()=>{
+       setshowphotoLibrary(true);
+    }},
     { name:"Upload Photo",callback:()=>{
          setgrabPhoto(true);
     }},
@@ -36,7 +40,8 @@ function Avatar({type,image,setImage}) {
       setImage("/default_avatar.png")
     }}
   ]
-
+  
+  // ----------------------------------- store photo in base64 format----------------------------------------------------------------
   const photoPickerChange=async (e)=>{
     const file=e.target.files[0];
     const reader=new FileReader();
@@ -106,8 +111,13 @@ function Avatar({type,image,setImage}) {
             setcontextMenu={setisContextMenuVisible}
            />
       )}
+        {/*-- ------------------------------show photo library------------------------------------------------------------ */}
+        {showphotoLibrary&&<PhotoLibrary setImage={setImage} hidePhotoLibrary={setshowphotoLibrary}/>}
+
       {/* ------------------------------photopicker element for uplode photo option---------------------------------------- */}
       {grabPhoto&&<PhotoPicker onChange={photoPickerChange} />}
+     
+
   </>
   )
   
