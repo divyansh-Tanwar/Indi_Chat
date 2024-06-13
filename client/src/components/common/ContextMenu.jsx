@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 function ContextMenu({options,coordinates,contextMenu,setcontextMenu}) {
   const contextMenuRef=useRef(null);
 
-  //-------------------------------------  if we click outside the context menu the context menu must disapper---------------------------------
+  //-------------------------------------(3) if we click outside the context menu the context menu must disapper---------------------------------
   useEffect(()=>{
     const handleOutsideClick=(event)=>{
       if(event.target.id!=="context-opener")
@@ -20,7 +20,7 @@ function ContextMenu({options,coordinates,contextMenu,setcontextMenu}) {
     }
     },[])
 
-  //------------------------------------ (handle click)if we click at any option on context menu the context menu will disapper-------------------------------
+  //------------------------------------(2) (handle click)if we click at any option on context menu the context menu will disapper-------------------------------
   const handleClick=(e,callback)=>{
      e.stopPropagation();
      setcontextMenu(false);
@@ -28,7 +28,7 @@ function ContextMenu({options,coordinates,contextMenu,setcontextMenu}) {
 
   }
 
-  //-------------------------------------------basic render of context menu----------------------------------------------------
+  //-------------------------------------------(1)basic render of context menu----------------------------------------------------
   return (
     <div 
      className={`bg-dropdown-background fixed py-2 z-[100]   shadow-xl`}

@@ -1,18 +1,57 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import ContextMenu from "./ContextMenu";
+import PhotoPicker from "./PhotoPicker";
 function Avatar({type,image,setImage}) {
   const[hover,sethover]=useState(false);
   const[isContextMenuVisible,setisContextMenuVisible]=useState(false);
   const[contextMenuCoordinates,setcontextMenuCoordinates]=useState({x:0,y:0});
+  const [grabPhoto,setgrabPhoto]=useState(false);
+
+  useEffect(()=>{
+   
+    if(grabPhoto)
+      {
+         const data=document.getElementById("photo-picker");
+         data.click();
+         document.body.onfocus=(e)=>{
+
+          setTimeout(()=>{
+            setgrabPhoto(false);
+          },1000)
+          
+         }
+      }
+  })
+
   const contextMenuOptions=[
     { name:"Take Photo",callback:()=>{}},
     { name:"Choose from Library",callback:()=>{}},
-    { name:"Upload Photo",callback:()=>{}},
-    { name:"Remove Photo",callback:()=>{}}
+    { name:"Upload Photo",callback:()=>{
+         setgrabPhoto(true);
+    }},
+    { name:"Remove Photo",callback:()=>{
+      setImage("/default_avatar.png")
+    }}
   ]
+
+  const photoPickerChange=async (e)=>{
+    const file=e.target.files[0];
+    const reader=new FileReader();
+    const data=document.createElement("img");
+    reader.onload=function(event){
+      data.src=event.target.result;
+      data.setAttribute("data.src",event.target.result);
+    };
+    reader.readAsDataURL(file);
+    setTimeout(()=>{
+      setImage(data.src);
+    },100); 
+
+
+  }
 
   const showContextMenu=(event)=>{
     event.preventDefault();
@@ -67,6 +106,8 @@ function Avatar({type,image,setImage}) {
             setcontextMenu={setisContextMenuVisible}
            />
       )}
+      {/* ------------------------------photopicker element for uplode photo option---------------------------------------- */}
+      {grabPhoto&&<PhotoPicker onChange={photoPickerChange} />}
   </>
   )
   
