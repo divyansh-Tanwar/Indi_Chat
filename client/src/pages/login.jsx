@@ -11,11 +11,21 @@ import { reducerCases } from "@/context/constants";
 function login() {
    const router=useRouter();
 
-   const[{},dispatch]=useStateProvider();
-   const handleLogin= async()=>{
-    const provider=new GoogleAuthProvider();
-    const {user:{displayName:name,email,photoURL:profileImage}}= await signInWithPopup(firebaseAuth,provider);
+        const[{},dispatch]=useStateProvider();
+        const handleLogin= async()=>{
+        const provider=new GoogleAuthProvider();
+    // const {user:{displayName:name,email,photoURL:profileImage}}= await signInWithPopup(firebaseAuth,provider);
     // console.log({user});
+          signInWithPopup(firebaseAuth, provider)
+        .then((result) => {
+          // User signed in successfully
+          console.log('User signed in:', result.user);
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          console.error('Error signing in:', error);
+        });
+
     try{
       
       if(email)

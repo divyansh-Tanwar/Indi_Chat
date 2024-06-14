@@ -1,5 +1,6 @@
 import getprismaInstance from "../utils/PrismaClient.js";
 
+//controller to check if user email is valid or not
 export const checkUser= async function(req,res,next){
     try{
         const {email}=req.body;
@@ -24,6 +25,37 @@ export const checkUser= async function(req,res,next){
     }catch(err){
         next(err);  
     }
+}
+
+//controller to store user info entered in onboarding page to database
+export const onBoardUser=async(req,res,next)=>{
+   
+    try{
+     
+        const {email,name,about,image:profilePicture}=req.body;
+            if(!email||!name||!profilePicture)
+            {
+                return res.send("Email ,name, profilePicture is required");
+            }
+            else
+            {
+                const prisma=getprismaInstance();
+                await prisma.user.create({
+                    data:{
+                        email,
+                        name,
+                        about,
+                        profilePicture
+                    },
+                });
+
+                return res.json({msg:"Success",status:true});
+            }
+
+    }catch{
+
+    }
+
 }
 
 
