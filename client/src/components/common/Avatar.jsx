@@ -5,13 +5,18 @@ import { FaCamera } from "react-icons/fa";
 import ContextMenu from "./ContextMenu";
 import PhotoPicker from "./PhotoPicker";
 import PhotoLibrary from "./PhotoLibrary";
+import CapturePhoto from "./CapturePhoto";
 function Avatar({type,image,setImage}) {
+  //------------------------------------important states-------------------------------------------------------------
   const[hover,sethover]=useState(false);
   const[isContextMenuVisible,setisContextMenuVisible]=useState(false);
   const[contextMenuCoordinates,setcontextMenuCoordinates]=useState({x:0,y:0});
   const [grabPhoto,setgrabPhoto]=useState(false);
   const [showphotoLibrary,setshowphotoLibrary] =useState(false);
+  const [showCapturePhoto,setShowCapturePhoto] =useState(false);
+  //-------------------------------- states declaration ends-------------------------------------------------------
 
+  //------------------------------------function of adding funcationality(faf)--------------------------------------- 
   useEffect(()=>{
    
     if(grabPhoto)
@@ -29,7 +34,9 @@ function Avatar({type,image,setImage}) {
   })
 
   const contextMenuOptions=[
-    { name:"Take Photo",callback:()=>{}},
+    { name:"Take Photo",callback:()=>{
+      setShowCapturePhoto(true);
+    }},
     { name:"Choose from Library",callback:()=>{
        setshowphotoLibrary(true);
     }},
@@ -64,6 +71,8 @@ function Avatar({type,image,setImage}) {
     setisContextMenuVisible(true);
   }
   
+  //-------------------------------------------faf end------------------------------------------------------------------
+  //----------------------------------------viewport display of onbording page----------------------------------------
   return(
     <>
     {/*------------------------------------- for small(sm) size image---------------------------------------------------- */}
@@ -111,6 +120,12 @@ function Avatar({type,image,setImage}) {
             setcontextMenu={setisContextMenuVisible}
            />
       )}
+      {/*--------------------------------- capture photo(camera) functionality---------------------------------------------------- */}
+      
+        {  
+        showCapturePhoto&&<CapturePhoto  setImage={setImage} hide={setShowCapturePhoto}/>
+        }
+
         {/*-- ------------------------------show photo library------------------------------------------------------------ */}
         {showphotoLibrary&&<PhotoLibrary setImage={setImage} hidePhotoLibrary={setshowphotoLibrary}/>}
 
