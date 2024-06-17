@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
   function onboarding() {
   //-------------------------------------important states-------------------------------------------------------------------
   const router=useRouter();
-  const[{userInfo,newUser}]=useStateProvider();
+  const[{userInfo,newUser},dispatch]=useStateProvider();
   const [name,setName]=useState(userInfo?.name||"");
   const [about,setAbout]=useState("");
   const [image,setImage]=useState("/default_avatar.png");
@@ -51,6 +51,7 @@ import { useEffect, useState } from "react";
                     dispatch({
                     type:reducerCases.SET_USER_INFO,
                     userInfo:{
+                      id:data.id,
                       name,
                       email,
                       profileImage:image,

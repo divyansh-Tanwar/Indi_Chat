@@ -52,8 +52,10 @@ export const onBoardUser=async(req,res,next)=>{
                 return res.json({msg:"Success",status:true});
             }
 
-    }catch{
-
+    }catch(error){
+       
+        console.error("Error onboarding user:", error);
+        return res.status(500).json({ error: "Internal server error" });
     }
 
 }

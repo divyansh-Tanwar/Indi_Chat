@@ -106,7 +106,7 @@ function Avatar({type,image,setImage}) {
           </div>
 
           <div className=" flex items-center justify-center  h-40 w-40">
-              <Image src={image} alt="Avatar" className="rounded-full" fill /> 
+              <Image src={image} alt="Avatar" className="rounded-full" fill   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/> 
           </div>
       </div>
      )}

@@ -2,7 +2,7 @@ import { CHECK_USER_ROUTE } from "@/utils/ApiRoutes";
 import { firebaseAuth } from "@/utils/FirebaseConfig";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { FcGoogle } from 'react-icons/fc';
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -11,21 +11,21 @@ import { reducerCases } from "@/context/constants";
 function login() {
    const router=useRouter();
 
-        const[{},dispatch]=useStateProvider();
+        const[{userInfo,newUser},dispatch]=useStateProvider();
+
+        useEffect(()=>{
+          if(userInfo?.id&&!newUser)
+            {
+              router.push("/");
+            }
+
+        },[userInfo,newUser])
+
         const handleLogin= async()=>{
         const provider=new GoogleAuthProvider();
-    // const {user:{displayName:name,email,photoURL:profileImage}}= await signInWithPopup(firebaseAuth,provider);
-    // console.log({user});
-          signInWithPopup(firebaseAuth, provider)
-        .then((result) => {
-          // User signed in successfully
-          console.log('User signed in:', result.user);
-        })
-        .catch((error) => {
-          // Handle Errors here.
-          console.error('Error signing in:', error);
-        });
-
+        //add changes to over come cross orign problem
+      const {user:{displayName:name,email,photoURL:profileImage}}= await signInWithPopup(firebaseAuth,provider);
+      //  console.log({user});
     try{
       
       if(email)
@@ -46,6 +46,21 @@ function login() {
                     },
                    })
                    router.push("/onboarding");
+              }
+              else
+              {   
+                const {id,email,name,profilePicture:profileImage,status}=data;
+                  dispatch({
+                    type:reducerCases.SET_USER_INFO,
+                    userInfo:{
+                      id,
+                      name,
+                      email,
+                      profileImage,
+                      status,
+                    },
+                  })
+                  router.push("/");
               }
         }
 
