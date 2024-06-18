@@ -40,7 +40,7 @@ export const onBoardUser=async(req,res,next)=>{
             else
             {
                 const prisma=getprismaInstance();
-                await prisma.user.create({
+                const user= await prisma.user.create({
                     data:{
                         email,
                         name,
@@ -49,11 +49,12 @@ export const onBoardUser=async(req,res,next)=>{
                     },
                 });
 
-                return res.json({msg:"Success",status:true});
+                return res.json({msg:"Success",status:true, user});
             }
 
     }catch(error){
-       
+        
+        console.log("yeah error ke jad hein");
         console.error("Error onboarding user:", error);
         return res.status(500).json({ error: "Internal server error" });
     }

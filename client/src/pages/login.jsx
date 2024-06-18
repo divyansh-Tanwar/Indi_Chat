@@ -49,7 +49,7 @@ function login() {
               }
               else
               {   
-                const {id,email,name,profilePicture:profileImage,status}=data;
+                const {id,email,name,profilePicture:profileImage,status}=data.data;
                   dispatch({
                     type:reducerCases.SET_USER_INFO,
                     userInfo:{
