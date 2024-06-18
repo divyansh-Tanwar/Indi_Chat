@@ -3,7 +3,7 @@ import React from "react";
 
 function Empty() {
   return (
-    <div className="border-conversation-border border-l-4 border-l-white  w-full bg-panel-header-background flex flex-col h-[100vh] border-b-4 border-b-orange-500 items-center justify-center">
+    <div className="border-conversation-border border-l-2 border-l-white  w-full bg-panel-header-background flex flex-col h-[100vh] border-b-4 border-b-orange-500 items-center justify-center">
       <div>
       <Image src="/INDIA.gif" alt="Logo" height={600}  width={600}/>
       <div className="flex  gap-2 justify-center items-center">

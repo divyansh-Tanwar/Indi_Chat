@@ -9,6 +9,7 @@ import { data } from "autoprefixer";
 import { useRouter } from "next/router";
 import { reducerCases } from "@/context/constants";
 import { useStateProvider } from "@/context/StateContext";
+import Chat from "./Chat/Chat";
 
 function Main() {
   const router=useRouter();
@@ -62,7 +63,8 @@ function Main() {
     <>
       <div className="grid grid-cols-main h-screen w-screen max-h-screen max-w-full overflow-hidden">
       <ChatList/>
-      <Empty/>
+      {/* <Empty/> */}
+      <Chat/>
       </div>
     </>
   );

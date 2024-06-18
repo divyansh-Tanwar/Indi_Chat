@@ -5,7 +5,7 @@ import List from "./List";
 
 function ChatList() {
   return (
-    <div className="bg-panel-header-background flex flex-col max-h-screen z-20">
+    <div className="bg-panel-header-background flex flex-col max-h-screen z-20 border-r-2">
     <ChatListHeader/>
     <SearchBar/>
     <List/>
