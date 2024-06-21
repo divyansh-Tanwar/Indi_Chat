@@ -18,7 +18,7 @@ function ChatList() {
     }
   })
   return (
-    <div className="bg-panel-header-background flex flex-col max-h-screen z-20 border-r-2" >
+    <div className="bg-black flex flex-col max-h-screen z-20 border-r-2" >
     {/* case1: */}
     {
       pageType==='default'&&(

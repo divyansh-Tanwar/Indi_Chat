@@ -35,7 +35,7 @@ function ContactsList() {
           </div>
        </div>
          {/*---------------------- Search Bar------------------------------------- */}
-        <div className=" bg-search-input-container-background flex py-3 pl-5 items-center gap-3 h-14">
+        <div className=" bg-black flex py-3 pl-5 items-center gap-3 h-14">
             <div className="bg-panel-header-background flex items-center  gap-5 px-3 py-1 rounded-lg flex-grow">
                 <div >
                     <BiSearchAlt2 className=" text-white cursor-pointer text-xl"/>
@@ -52,7 +52,7 @@ function ContactsList() {
         {
           Object.entries(allContacts).map(([initialLetter,userList])=>{
             return(
-              <div key={Date.now()+initialLetter}>
+              <div key={Date.now()+initialLetter} className="bg-black">
               <div className="text-teal-light pl-10 py-5">{initialLetter}</div>
               {
                 userList.map((contact)=>{
