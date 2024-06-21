@@ -59,6 +59,40 @@ export const onBoardUser=async(req,res,next)=>{
         return res.status(500).json({ error: "Internal server error" });
     }
 
+};
+
+export const getAllUsers= async(req,res,next)=>{
+    try{
+       
+        const prisma= getprismaInstance();
+        const users=await prisma.user.findMany({
+            orderBy:{name:'asc'},
+            select:{
+                id:true,
+                name:true,
+                email:true,
+                profilePicture:true,
+                about:true,
+            },
+        });
+        console.log(users);
+
+        const usersGroupedByInitialLetter={};
+        users.forEach((user)=>{
+            const initialLetter=user.name.charAt(0).toUpperCase();
+            if(!usersGroupedByInitialLetter[initialLetter])
+            {
+                usersGroupedByInitialLetter[initialLetter]=[];
+            }
+
+            usersGroupedByInitialLetter[initialLetter].push(user);
+        });
+       
+        return res.status(200).send({users:usersGroupedByInitialLetter});
+
+    }catch(err){
+        next(err);
+    }
 }
 
 
