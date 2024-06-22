@@ -1,7 +1,7 @@
 export const calculateTime = (inputDateStr) => {
   // Assuming the input date string is in UTC format
   const inputDate = new Date(inputDateStr);
-
+  console.log(inputDate)
   // Get current date
   const currentDate = new Date();
 

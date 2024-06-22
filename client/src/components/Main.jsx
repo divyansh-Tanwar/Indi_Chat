@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { reducerCases } from "@/context/constants";
 import { useStateProvider } from "@/context/StateContext";
 import Chat from "./Chat/Chat";
+import { GET_MESSAGES_ROUTE } from "@/utils/ApiRoutes";
 
 function Main() {
   const router=useRouter();
@@ -56,8 +57,27 @@ function Main() {
             }
       }
       
-  })
+  },[])
+  
 
+  useEffect(()=>{
+    
+    const getMessages=async()=>{
+       const{data:{messages}}=await axios.get(`${GET_MESSAGES_ROUTE}/${userInfo.id}/${currentChatUser.id}`);
+          
+        //  console.log("data mil gya")
+        //   console.log({data});
+        dispatch({type:reducerCases.SET_MESSAGES,messages})
+      
+    }
+    
+     
+    if(currentChatUser?.id)
+      {
+        getMessages();
+      }
+   
+  },[currentChatUser])
 
   return (
     <>
