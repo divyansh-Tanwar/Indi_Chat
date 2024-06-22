@@ -16,7 +16,7 @@ function ChatList() {
     {
       SetPageType("default");
     }
-  })
+  },)
   return (
     <div className="bg-black flex flex-col max-h-screen z-20 border-r-2" >
     {/* case1: */}
