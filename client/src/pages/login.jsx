@@ -21,53 +21,55 @@ function login() {
 
         },[userInfo,newUser])
 
-        const handleLogin= async()=>{
-        const provider=new GoogleAuthProvider();
-        //add changes to over come cross orign problem
-      const {user:{displayName:name,email,photoURL:profileImage}}= await signInWithPopup(firebaseAuth,provider);
-      //  console.log({user});
-    try{
-      
-      if(email)
-        {
-             const {data}=await axios.post(CHECK_USER_ROUTE,{email});
-             console.log(data);
-             //if data not found in database
-             if(!data.status)
-              {    
-                dispatch({type:reducerCases.SET_NEW_USER, newUser:true});
-                   dispatch({
-                    type:reducerCases.SET_USER_INFO,
-                    userInfo:{
-                      name,
-                      email,
-                      profileImage,
-                      status:"",
-                    },
-                   })
-                   router.push("/onboarding");
-              }
-              else
-              {   
-                const {id,email,name,profilePicture:profileImage,status}=data.data;
-                  dispatch({
-                    type:reducerCases.SET_USER_INFO,
-                    userInfo:{
-                      id,
-                      name,
-                      email,
-                      profileImage,
-                      status,
-                    },
-                  })
-                  router.push("/");
-              }
-        }
 
-    } catch(err){
-       
-      console.log(err);
-    }
+        // ---------------------handle longin function------------------------------------------------------------
+    const handleLogin= async()=>{
+          const provider=new GoogleAuthProvider();
+        //add changes to over come cross orign problem
+         const {user:{displayName:name,email,photoURL:profileImage}}= await signInWithPopup(firebaseAuth,provider);
+      //  console.log({user});
+        try{
+          
+          if(email)
+            {
+                const {data}=await axios.post(CHECK_USER_ROUTE,{email});
+                console.log(data);
+                //if data not found in database
+                if(!data.status)
+                  {    
+                    dispatch({type:reducerCases.SET_NEW_USER, newUser:true});
+                      dispatch({
+                        type:reducerCases.SET_USER_INFO,
+                        userInfo:{
+                          name,
+                          email,
+                          profileImage,
+                          status:"",
+                        },
+                      })
+                      router.push("/onboarding");
+                  }
+                  else
+                  {   
+                    const {id,email,name,profilePicture:profileImage,status}=data.data;
+                      dispatch({
+                        type:reducerCases.SET_USER_INFO,
+                        userInfo:{
+                          id,
+                          name,
+                          email,
+                          profileImage,
+                          status,
+                        },
+                      })
+                      router.push("/");
+                  }
+            }
+
+        } catch(err){
+          
+          console.log(err);
+        }
    } ;
 
   return <div className="flex justify-center items-center bg-panel-header-background h-screen w-screen flex-col gap-6">

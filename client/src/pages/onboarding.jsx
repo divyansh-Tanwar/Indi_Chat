@@ -39,15 +39,22 @@ import { useEffect, useState } from "react";
   }
 
   const onBoardUserHandle=async()=>{
+    console.log("inside onBoard");
     if(validateDetails())
-      {
+      {   
+        console.log("inside if");
           const email=userInfo.email;
           try
-          {
+          {   
+            console.log("inside try")
               const {data}=await axios.post(ONBOARD_USER_ROUTE,{ email,name,about,image});
+              console.log("below data")
+              console.log(data.status);
               if(data.status)
-                {
-                    dispatch({type:reducerCases.SET_NEW_USER, newUser:false});
+                {   
+                  console.log("above dispatch");
+                   dispatch({type:reducerCases.SET_NEW_USER, newUser:false});
+                    console.log("below dispatch");
                     dispatch({
                     type:reducerCases.SET_USER_INFO,
                     userInfo:{
@@ -58,11 +65,13 @@ import { useEffect, useState } from "react";
                       status:about,
                     },
                     });
+                    console.log("value set");
 
-                    router.push("/");                }
+                    router.push("/");               
+                   }
           }
           catch(err)
-          {
+          {          
                   console.log("kuch error aa gya");
           }
       }
