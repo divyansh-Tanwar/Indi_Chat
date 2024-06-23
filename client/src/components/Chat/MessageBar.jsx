@@ -9,7 +9,10 @@ import axios from "axios";
 import { reducerCases } from "@/context/constants";
 import EmojiPicker, { Emoji } from "emoji-picker-react";
 import PhotoPicker from "../common/PhotoPicker";
-import CaptureAudio from "../common/CaptureAudio";
+import dynamic from "next/dynamic";
+const CaptureAudio =dynamic(()=>import("../common/CaptureAudio"),{ssr:false});
+
+
 function MessageBar() {
   const[{userInfo,currentChatUser,socket},dispatch]=useStateProvider();
   const[message,setMessage]=useState("");
@@ -150,10 +153,7 @@ const handleEmojiClick= (emoji)=>{
           </button>
           </div>
       </>
-        )
-      }
-        
-      
+        )}
        {/* ------------------------------photopicker element for uplode photo option---------------------------------------- */}
        {grabPhoto&&<PhotoPicker onChange={photoPickerChange} />}
         {/* --------------------------audio recorder componenet----------------------------------------------------------- */}
