@@ -9,13 +9,16 @@ import axios from "axios";
 import { reducerCases } from "@/context/constants";
 import EmojiPicker, { Emoji } from "emoji-picker-react";
 import PhotoPicker from "../common/PhotoPicker";
+import CaptureAudio from "../common/CaptureAudio";
 function MessageBar() {
   const[{userInfo,currentChatUser,socket},dispatch]=useStateProvider();
   const[message,setMessage]=useState("");
   const[showEmojiPicker,setshowEmojiPicker]=useState(false);
   const emojiPickerRef=useRef(null);
   const [grabPhoto,setgrabPhoto]=useState(false);
+  const[showAudioRecorder,setshowAudioRecorder]=useState(false);
 
+  //-------------------------------------for image message---------------------------------
   const photoPickerChange=async (e)=>{
    
     try{
@@ -115,34 +118,46 @@ const handleEmojiClick= (emoji)=>{
 
   return (
     <div className="bg-gradient-to-r from-orange-600 from-15% via-white via-30% to-green-600 to-90% h-20 px-4 flex items-center  gap-6 relative "> 
+    {!showAudioRecorder&&(
       <>
-        <div className="flex gap-6">
-           <BsEmojiSmile className="text-white cursor-pointer text-xl" title="Emoji" id="emoji-open"  onClick={handleEmojiModal}/>
-           {showEmojiPicker&&
-           <div className="absolute bottom-24 left-16 z-40" ref={emojiPickerRef}>
-           <EmojiPicker onEmojiClick={handleEmojiClick} theme="dark" />
-           </div>
-           }
-           <ImAttachment className="text-white  cursor-pointer text-xl" title="Attach File" onClick={()=>setgrabPhoto(true)}/>
-        </div>
-        <div className="w-full rounded-lg h-10 flex items-center">
-         <input 
-         type="Text"
-          placeholder="Type a Message" 
-          className="bg-input-background text-sm focus:outline-none text-white  h-10 rounded-lg px-5 py-4 w-full"
-            onChange={(event)=>setMessage(event.target.value)}
-            value={message}
-          />
-        </div>
-        <div className="flex w-10 items-center justify-center">
-        <button>
-        <MdSend className="text-white  cursor-pointer text-xl" title="Send Message"  onClick={sendMessage}/>
-        {/* <FaMicrophone className="text-white cursor-pointer text-xl" title="Record"/> */}
-        </button>
-        </div>
+            <div className="flex gap-6">
+            <BsEmojiSmile className="text-white cursor-pointer text-xl" title="Emoji" id="emoji-open"  onClick={handleEmojiModal}/>
+            {showEmojiPicker&&
+            <div className="absolute bottom-24 left-16 z-40" ref={emojiPickerRef}>
+            <EmojiPicker onEmojiClick={handleEmojiClick} theme="dark" />
+            </div>
+            }
+            <ImAttachment className="text-white  cursor-pointer text-xl" title="Attach File" onClick={()=>setgrabPhoto(true)}/>
+          </div>
+          <div className="w-full rounded-lg h-10 flex items-center">
+          <input 
+          type="Text"
+            placeholder="Type a Message" 
+            className="bg-input-background text-sm focus:outline-none text-white  h-10 rounded-lg px-5 py-4 w-full"
+              onChange={(event)=>setMessage(event.target.value)}
+              value={message}
+            />
+          </div>
+          <div className="flex w-10 items-center justify-center">
+          <button>
+          {message.length?(
+            <MdSend className="text-white  cursor-pointer text-xl" title="Send Message"  onClick={sendMessage}/>
+          ):
+          (
+            <FaMicrophone className="text-white cursor-pointer text-xl" title="Record" onClick={()=>setshowAudioRecorder(true)}/>
+          )
+          }
+          </button>
+          </div>
       </>
+        )
+      }
+        
+      
        {/* ------------------------------photopicker element for uplode photo option---------------------------------------- */}
        {grabPhoto&&<PhotoPicker onChange={photoPickerChange} />}
+        {/* --------------------------audio recorder componenet----------------------------------------------------------- */}
+       {showAudioRecorder&&<CaptureAudio hide={setshowAudioRecorder}/>}
     </div>
   );
 }
