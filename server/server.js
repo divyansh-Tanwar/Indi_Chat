@@ -38,6 +38,13 @@ io.on("connection",(socket)=>{
         onlineUser.set(userId,socket.id);
     });
 
+    socket.on("signout",(id)=>{
+        onlineUser.delete(id);
+        // socket.broadcast.emit("online-users",
+        //     {onlineUser:Array.from(onlineUser.keys()),
+        //     });
+    });
+
     socket.on("send-msg",(data)=>{
         const sendUserSocket=onlineUser.get(data.to);
         if(sendUserSocket)
