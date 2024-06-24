@@ -70,6 +70,11 @@ const reducer=(state,action)=>{
                          ...state,
                          onlineUsers:action.onlineUsers,
                 };
+            case  reducerCases.SET_EXIT_CHAT:
+                return{
+                            ...state,
+                            currentChatUser:undefined,
+                };
         default:
             return state;
     }

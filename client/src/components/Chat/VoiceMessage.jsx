@@ -71,10 +71,10 @@ function VoiceMessage({message}){
              audioMessage.addEventListener('timeupdate', updatePlaybackTime);
              
                 return ()=>{
-                  if(audioMessage)
+                  if(audioMessage) 
                     {
-                      audioMessage.removeEventListner("timeupdate",updatePlaybackTime);
-                    }
+                    audioMessage.removeEventListener("timeupdate", updatePlaybackTime);
+                    }   
                     else
                     {
                       console.log("some error");
