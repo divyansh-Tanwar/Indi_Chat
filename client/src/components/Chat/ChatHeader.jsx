@@ -36,8 +36,8 @@ function ChatHeader() {
           </div>
       </div>
       <div className="flex gap-6 ">
-        <MdCall className="text-white cursor-pointer text-xl"/>
-        <IoVideocam className="text-white cursor-pointer text-xl"/>
+        {/* <MdCall className="text-white cursor-pointer text-xl"/>
+        <IoVideocam className="text-white cursor-pointer text-xl"/> */}
         <BiSearchAlt2 className="text-white cursor-pointer text-xl" onClick={()=>dispatch({type:reducerCases.SET_MESSAGES_SEARCH})}/>
         <BsThreeDotsVertical className="text-white cursor-pointer text-xl " id="context-opener" onClick={(event)=>showContextMenu(event)}/>
         {isContextMenuVisible&&(<ContextMenu 
