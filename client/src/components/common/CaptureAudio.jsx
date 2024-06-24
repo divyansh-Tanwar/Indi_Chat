@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useStateProvider } from "@/context/StateContext";
 import { MdSend } from "react-icons/md";
 import WaveSurfer from "wavesurfer.js";
+import axios from "axios";
+import { ADD_AUDIO_MESSAGE_ROUTE } from "@/utils/ApiRoutes";
+import { reducerCases } from "@/context/constants";
 function CaptureAudio({hide}) {
   //getting acces to global value
   const[{userInfo,currentChatUser,socket},dispatch]=useStateProvider();
@@ -114,6 +117,7 @@ function CaptureAudio({hide}) {
      setCurrentPlaybackTime(0);
      setTotalDuration(0);
      setisRecording(true);
+     setRecordedAudio(null);
      navigator.mediaDevices.getUserMedia({audio:true}).then((stream)=>{
       const mediaRecorder=new MediaRecorder(stream);
       mediaRecorderRef.current=mediaRecorder;
@@ -181,9 +185,37 @@ function CaptureAudio({hide}) {
 
  
 
-  const sendRecording= async()=>{
+const sendRecording= async()=>{
+       
+    try{
+      const formData=new FormData();
+      formData.append("audio",renderedAudio);
+      const response=await axios.post(ADD_AUDIO_MESSAGE_ROUTE,formData,{
+        headers:{
+           "Content-Type":"multipart/form-data",
+        },
+        params:{
+          from:userInfo.id,
+          to:currentChatUser.id,
+        }
+      });
 
-  }
+      if(response.status===201)
+        {
+          socket.current.emit("send-msg",{to:currentChatUser?.id,from:userInfo?.id, message:response.data.message});
+          dispatch({type:reducerCases .ADD_MESSAGE,newMessage:{...response.data.message,},fromSelf:true,});
+        }
+        else
+        {
+            console.log("image cant be sent MessageBar.jsx")
+        }
+
+    }catch(err){
+        
+      console.log("image message have some problem check MessageBar.jsx")
+      console.log(err);
+    }
+ }
 
   const formatTime=(time)=>{
     if(isNaN(time))
